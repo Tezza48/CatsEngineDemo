@@ -2,7 +2,7 @@
 
 
 
-Sprite::Sprite() : spriteRect(0.0f, 0.0f, 1.0f, 1.0f)
+Sprite::Sprite()
 {
 	
 }
@@ -10,4 +10,10 @@ Sprite::Sprite() : spriteRect(0.0f, 0.0f, 1.0f, 1.0f)
 
 Sprite::~Sprite()
 {
+}
+
+void Sprite::Init(TextureHandle texture, vec4 _rect)
+{
+	textureAtlas = texture;
+	rect = _rect;
 }

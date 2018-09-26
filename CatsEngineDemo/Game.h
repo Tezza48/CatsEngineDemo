@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include <glm/ext.hpp>
 #include "ContentManager.h"
+#include "Sprite.h"
 
 using namespace glm;
 
@@ -93,6 +94,7 @@ private:
 	Camera cam;
 	Quad quad;
 	Material mat;
+	Sprite cactusSprite;
 public:
 	Game() : App() {}
 	~Game();

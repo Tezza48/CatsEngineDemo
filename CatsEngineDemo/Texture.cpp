@@ -4,8 +4,8 @@
 
 Texture::Texture(byte * data, int _width, int _height, int _numChannels) : width(_width), height(_height), numChannels(_numChannels)
 {
-	glGenTextures(1, &textureHandle);
-	glBindTexture(GL_TEXTURE_2D, textureHandle);
+	glGenTextures(1, &glTexture);
+	glBindTexture(GL_TEXTURE_2D, glTexture);
 
 	//Wrap and filtering
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);

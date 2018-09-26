@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\textures">
+      <UniqueIdentifier>{c4ea7b7a-5d24-43d0-b0a2-2313a6b73253}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\shaders">
+      <UniqueIdentifier>{393e6320-f06c-4688-98b0-068362cfb594}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -83,10 +89,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\default.frag">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\shaders</Filter>
     </None>
     <None Include="res\shaders\default.vert">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\shaders</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\textures\cat-bits.png">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
+    <Image Include="res\textures\cat-heads.png">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
+    <Image Include="res\textures\environment-desert.png">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>

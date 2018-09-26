@@ -19,7 +19,7 @@ public:
 	ContentManager();
 	~ContentManager();
 
-	uint LoadTexture(const char * filename);
+	TextureHandle LoadTexture(const char * filename);
 
 	const Texture & GetTexture(uint id) const;
 };

@@ -7,10 +7,12 @@
 using std::vector;
 using namespace glm;
 
+typedef uint TextureHandle;
+
 class Texture
 {
 private:
-	uint textureHandle;
+	uint glTexture;
 	int width, height, numChannels;
 public:
 	Texture(byte * data, int _width, int _height, int _numChannels);
@@ -18,7 +20,7 @@ public:
 
 	void Bind() const
 	{
-		glBindTexture(GL_TEXTURE_2D, textureHandle);
+		glBindTexture(GL_TEXTURE_2D, glTexture);
 	}
 };
 

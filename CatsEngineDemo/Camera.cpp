@@ -11,21 +11,42 @@ Camera::~Camera()
 {
 }
 
-mat4 Camera::GetViewProjection()
+//mat4 Camera::GetViewProjection()
+//{
+//	return projection * view; // backwards because it's transposed
+//}
+
+void Camera::CalculateView()
 {
-	mat4 view = lookAt(position, position + vec3(0.0f, 1.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
-	return projection/* * view*/; // backwards because it's transposed
+	view = lookAtLH(vec3(position, -1.0f), vec3(position, 0.0f), vec3(0.0f, 1.0f, 0.0f));
+}
+
+void Camera::CalculateProjection()
+{
+	vec2 offset = vec2(aspectRatio / 2.0f * orthographicSize, orthographicSize / 2.0f);
+	projection = ortho(-offset.x, offset.x, -offset.y, offset.y);
 }
 
 void Camera::OnScreenResize(int width, int height)
 {
 	aspectRatio = static_cast<float>(width) / static_cast<float>(height);
-
-	vec2 offset = vec2(aspectRatio / 2.0f * orthographicSize, orthographicSize / 2.0f);
-	projection = ortho(-offset.x, offset.x, -offset.y, offset.y);
+	CalculateProjection();
 }
 
 void Camera::Move2D(vec2 delta)
 {
-	position += vec3(delta.x, delta.y, 0.0f);
+	position += delta;
+	CalculateView();
+}
+
+void Camera::SetOrthographicSize(float newSize)
+{
+	orthographicSize = newSize;
+	CalculateProjection();
+}
+
+void Camera::SetPosition(vec2 _position)
+{
+	position = _position;
+	CalculateView();
 }

@@ -1,6 +1,7 @@
 #version 460 core
 
 uniform mat4 worldViewProj;
+uniform vec4 subrect = vec4(0.0, 0.0, 1.0, 1.0);
 
 layout(location = 0) in vec3 vertPosition;
 layout(location = 1) in vec2 vertTex;
@@ -11,7 +12,13 @@ out vec2 tex;
 
 void main()
 {
-	gl_Position = vec4(vertPosition, 1.0) * worldViewProj;
+	float ratio = (subrect.z - subrect.x) / (subrect.w - subrect.y);
+
+	mat2 rectScale = mat2(1.0);
+	rectScale[0][0] = ratio;
+
+	gl_Position = vec4(vertPosition, 1.0) * mat4(rectScale) * worldViewProj;
 	color = vertColor;
-	tex = vertTex;
+
+	tex = vertTex * subrect.zw + subrect.xy;
 }

@@ -6,13 +6,14 @@ using namespace glm;
 class Camera
 {
 private:
-	vec3 position;
+	vec2 position;
 
 	// Settings
 	float orthographicSize = 5.0f;
 	float aspectRatio;
 
 	// cache projection
+	mat4 view;
 	mat4 projection;
 public:
 	Camera();
@@ -22,8 +23,16 @@ public:
 
 	void Move2D(vec2 delta);
 
-	mat4 GetViewProjection();
+	//mat4 GetViewProjection();
 
-	inline void SetOrthographicSize(float newSize) { orthographicSize = newSize; }
+	inline const mat4 & GetView() const { return view; }
+	inline const mat4 & GetProjection() const { return projection; }
+
+	void SetOrthographicSize(float newSize);
+	void SetPosition(vec2 _position);
+
+private:
+	void CalculateView();
+	void CalculateProjection();
 };
 

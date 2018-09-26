@@ -179,6 +179,11 @@
     <None Include="res\shaders\default.frag" />
     <None Include="res\shaders\default.vert" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\textures\cat-bits.png" />
+    <Image Include="res\textures\cat-heads.png" />
+    <Image Include="res\textures\environment-desert.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

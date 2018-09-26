@@ -29,8 +29,8 @@ class App
 {
 public:
 private:
-	int windowWidth = 800;
-	int windowHeight = 600;
+	int windowWidth = 1280;
+	int windowHeight = 720;
 	string windowTitle = "2D GL Engine";
 
 	GLFWwindow * window;

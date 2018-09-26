@@ -7,8 +7,11 @@
 #include "Common.h"
 #include <glm/glm.hpp>
 #include "ContentManager.h"
+#include "Texture.h"
 
 using namespace glm;
+
+typedef uint MaterialHandle;
 
 // Has a list of passes (programs
 // Content loader loads shader file and creates the programs
@@ -18,7 +21,7 @@ class Material
 private:
 	uint shaderProgram;
 
-	uint diffuseTextureHandle;
+	TextureHandle diffuseTextureHandle;
 public:
 	Material();
 	~Material();
@@ -91,7 +94,8 @@ public:
 	}
 
 	void SetWVP(mat4 wvp);
-	void SetDiffuseTexture(uint handle) { diffuseTextureHandle = handle; }
+	void SetSubRect();
+	void SetDiffuseTexture(TextureHandle handle) { diffuseTextureHandle = handle; }
 
 	inline uint GetShaderProgram(){ return shaderProgram; } // REMOVE THIS
 };
