@@ -18,13 +18,13 @@ Camera::~Camera()
 
 void Camera::CalculateView()
 {
-	view = lookAtLH(vec3(position, -1.0f), vec3(position, 0.0f), vec3(0.0f, 1.0f, 0.0f));
+	view = lookAtLH(vec3(position, -10.0f), vec3(position, 0.0f), vec3(0.0f, 1.0f, 0.0f));
 }
 
 void Camera::CalculateProjection()
 {
 	vec2 offset = vec2(aspectRatio / 2.0f * orthographicSize, orthographicSize / 2.0f);
-	projection = ortho(-offset.x, offset.x, -offset.y, offset.y);
+	projection = glm::ortho(-offset.x, offset.x, -offset.y, offset.y, plains.x, plains.y);
 }
 
 void Camera::OnScreenResize(int width, int height)
@@ -37,6 +37,12 @@ void Camera::Move2D(vec2 delta)
 {
 	position += delta;
 	CalculateView();
+}
+
+void Camera::SetPlanes(vec2 _plains)
+{
+	plains = _plains;
+	CalculateProjection();
 }
 
 void Camera::SetOrthographicSize(float newSize)

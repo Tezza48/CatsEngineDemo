@@ -1,14 +1,17 @@
 #pragma once
 #include <glm/glm.hpp>
+#include <glm/ext.hpp>
 #include "App.h"
 #include "Material.h"
 #include "Common.h"
 #include "Camera.h"
-#include <glm/ext.hpp>
 #include "ContentManager.h"
 #include "Sprite.h"
 
-using namespace glm;
+using  glm::vec2;
+using  glm::vec3;
+using  glm::vec4;
+using  glm::mat4;
 
 struct Vertex
 {
