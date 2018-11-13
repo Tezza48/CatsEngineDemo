@@ -155,10 +155,12 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ContentManager.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="SpriteMaterial.cpp" />
     <ClCompile Include="stb_implementation.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
@@ -168,16 +170,20 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="ContentManager.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameTimer.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="SpriteMaterial.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\default.frag" />
     <None Include="res\shaders\default.vert" />
+    <None Include="res\shaders\sprite.frag" />
+    <None Include="res\shaders\sprite.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\cat-bits.png" />

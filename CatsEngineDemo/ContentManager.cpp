@@ -32,7 +32,18 @@ uint ContentManager::LoadTexture(const char * filename)
 	return textures.size() - 1;
 }
 
-const Texture & ContentManager::GetTexture(uint id) const
+SpriteHandle ContentManager::RegisterSprite(Sprite sprite)
+{
+	sprites.push_back(sprite);
+	return sprites.size() - 1;
+}
+
+Sprite & ContentManager::GetSprite(SpriteHandle id)
+{
+	return sprites[id];
+}
+
+Texture & ContentManager::GetTexture(uint id)
 {
 	// TODO: insert return statement here
 	return textures[id];

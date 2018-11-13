@@ -11,19 +11,19 @@ Camera::~Camera()
 {
 }
 
-//mat4 Camera::GetViewProjection()
-//{
-//	return projection * view; // backwards because it's transposed
-//}
+mat4 Camera::GetViewProjection()
+{
+	return projection * view; // backwards because it's transposed
+}
 
 void Camera::CalculateView()
 {
-	view = lookAtLH(vec3(position, -10.0f), vec3(position, 0.0f), vec3(0.0f, 1.0f, 0.0f));
+	view = lookAt(vec3(position, -5.0f), vec3(position, 0.0f), vec3(0.0f, 1.0f, 0.0f));
 }
 
 void Camera::CalculateProjection()
 {
-	vec2 offset = vec2(aspectRatio / 2.0f * orthographicSize, orthographicSize / 2.0f);
+	vec2 offset = vec2(aspectRatio * orthographicSize, orthographicSize) / vec2(2.0f);
 	projection = glm::ortho(-offset.x, offset.x, -offset.y, offset.y, plains.x, plains.y);
 }
 

@@ -51,6 +51,12 @@
     <ClCompile Include="stb_implementation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SpriteMaterial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -86,12 +92,24 @@
     <ClInclude Include="Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SpriteMaterial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\default.frag">
       <Filter>Resource Files\shaders</Filter>
     </None>
     <None Include="res\shaders\default.vert">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="res\shaders\sprite.frag">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="res\shaders\sprite.vert">
       <Filter>Resource Files\shaders</Filter>
     </None>
   </ItemGroup>

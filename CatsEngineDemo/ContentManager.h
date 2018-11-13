@@ -1,6 +1,7 @@
 #pragma once
 #include <stb/stb_image.h>
 #include "Texture.h"
+#include "Sprite.h"
 #include <vector>
 #include <string>
 #include "Common.h"
@@ -15,12 +16,15 @@ class ContentManager
 {
 private:
 	vector<Texture> textures;
+	vector<Sprite> sprites;
 public:
 	ContentManager();
 	~ContentManager();
 
 	TextureHandle LoadTexture(const char * filename);
+	SpriteHandle RegisterSprite(Sprite sprite);
 
-	const Texture & GetTexture(uint id) const;
+	Texture & GetTexture(TextureHandle id);
+	Sprite & GetSprite(SpriteHandle id);
 };
 

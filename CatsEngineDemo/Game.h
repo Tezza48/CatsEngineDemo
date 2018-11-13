@@ -7,6 +7,7 @@
 #include "Camera.h"
 #include "ContentManager.h"
 #include "Sprite.h"
+#include "GameObject.h"
 
 using  glm::vec2;
 using  glm::vec3;
@@ -97,7 +98,7 @@ private:
 	Camera cam;
 	Quad quad;
 	Material mat;
-	Sprite cactusSprite;
+	vector<GameObject> objects;
 public:
 	Game() : App() {}
 	~Game();

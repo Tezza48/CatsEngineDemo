@@ -28,7 +28,8 @@ public:
 
 	void Move2D(vec2 delta);
 
-	//mat4 GetViewProjection();
+	// Pre multiplied matrices
+	mat4 GetViewProjection();
 
 	inline const mat4 & GetView() const { return view; }
 	inline const mat4 & GetProjection() const { return projection; }

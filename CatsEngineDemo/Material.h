@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include "Common.h"
 #include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include "ContentManager.h"
 #include "Texture.h"
 
@@ -18,73 +19,17 @@ typedef uint MaterialHandle;
 // Currently does single pass
 class Material
 {
-private:
-	uint shaderProgram;
+protected:
+	RendererID Shader;
+	string name;
 
-	TextureHandle diffuseTextureHandle;
+	//TextureHandle diffuseTextureHandle;
 public:
-	Material();
-	~Material();
+	Material(string _shaderName = "default");
+	virtual ~Material();
 
-	//void Init();
-
-	// Should be responsibility of asset loader
-	inline bool Load()
-	{
-		shaderProgram = glCreateProgram();
-		uint vs = glCreateShader(GL_VERTEX_SHADER);
-		uint fs = glCreateShader(GL_FRAGMENT_SHADER);
-
-		std::ifstream file("res/shaders/default.vert");
-		if (!file.is_open()) return false;
-		
-		std::stringstream vsStream;
-		vsStream << file.rdbuf();
-		std::string vsSource = vsStream.str();
-		file.close();
-
-		file.open("res/shaders/default.frag", std::ifstream::in);
-		if (!file.is_open()) return false;
-
-		std::stringstream fsStream;
-		fsStream << file.rdbuf();
-		std::string fsSource = fsStream.str();
-		file.close();
-
-		int success;
-
-		const char * vscstr = vsSource.c_str();
-		glShaderSource(vs, 1, &vscstr, NULL);		
-		glCompileShader(vs);
-		glGetShaderiv(vs, GL_COMPILE_STATUS, &success);
-		if (success != GL_TRUE)
-		{
-			int length = 0;
-			char message[1024];
-			glGetShaderInfoLog(vs, 1024, &length, message);
-			printf("Vertex Shader COMPILATION ERROR: %s\n", message);
-			return false;
-		}
-		
-		const char * fscstr = fsSource.c_str();
-		glShaderSource(fs, 1, &fscstr, NULL);
-		glCompileShader(fs);
-		glGetShaderiv(fs, GL_COMPILE_STATUS, &success);
-		if (success != GL_TRUE)
-		{
-			int length = 0;
-			char message[1024];
-			glGetShaderInfoLog(fs, 1024, &length, message);
-			printf("Frag Shader COMPILATION ERROR: %s\n", message);
-			return false;
-		}
-
-		glAttachShader(shaderProgram, vs);
-		glAttachShader(shaderProgram, fs);
-		glLinkProgram(shaderProgram);
-
-		return true;
-	}
+	// Loads and compiles the correct shaders
+	bool Init();
 
 	void Bind(ContentManager & content) const;
 
@@ -93,10 +38,39 @@ public:
 		glUseProgram(0);
 	}
 
-	void SetWVP(mat4 wvp);
-	void SetSubRect();
-	void SetDiffuseTexture(TextureHandle handle) { diffuseTextureHandle = handle; }
 
-	inline uint GetShaderProgram(){ return shaderProgram; } // REMOVE THIS
+	void SetWVP(mat4 wvp);
+	//void SetSubRect();
+	//void SetDiffuseTexture(TextureHandle handle) { diffuseTextureHandle = handle; }
+
+	inline uint GetShaderProgram(){ return Shader; } // REMOVE THIS
+	
+public:
+	// property setters, cache locations at some point
+	template<typename T>
+	bool SetProperty(const char * name, T value)
+	{
+		return false;
+	}
+
+	template<> bool SetProperty<glm::vec4>(const char * name, glm::vec4 value)
+	{
+		int location = glGetUniformLocation(Shader, name);
+		if (location < 0) return false;
+
+		glUniform4fv(location, 1, value_ptr(value));
+		return true;
+	}
+
+	template<> bool SetProperty<glm::mat4>(const char * name, glm::mat4 value)
+	{
+		int location = glGetUniformLocation(Shader, name);
+		if (location < 0) return false;
+
+		glUniformMatrix4fv(location, 1, GL_FALSE, value_ptr(value));
+		return true;
+	}
 };
+
+
 

@@ -4,6 +4,8 @@
 #include <glm/glm.hpp>
 #include <vector>
 
+#define BindTexture(x) content.GetTexture(x).Bind();
+
 using std::vector;
 using namespace glm;
 
