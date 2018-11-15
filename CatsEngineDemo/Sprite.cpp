@@ -18,6 +18,11 @@ Sprite::~Sprite()
 {
 }
 
+void Sprite::SetTexture(TextureHandle _tex)
+{
+	textureAtlas = _tex;
+}
+
 //void Sprite::Init(TextureHandle texture, vec4 _rect)
 //{
 //

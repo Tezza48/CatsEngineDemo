@@ -19,12 +19,14 @@ private:
 public:
 	Sprite();
 	Sprite(TextureHandle texture, vec4 _rect);
+	Sprite(TextureHandle texture, vec4 _rect);
 	~Sprite();
 
 	//void Init(TextureHandle texture, vec4 _rect);
 
 	void SetRect(vec4 _rect) { rect = _rect; }
 	void SetColor(vec4 _color) { color = _color; }
+	void SetTexture(TextureHandle _tex);
 
 	TextureHandle & GetTexture() { return textureAtlas; }
 	vec4 GetRect() { return rect; }
