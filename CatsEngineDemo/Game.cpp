@@ -12,7 +12,7 @@ void Game::Setup()
 	App::Setup();
 
 	TextureHandle envTexture = content.LoadTexture("environment-desert.png");
-	Sprite cactusSprite = Sprite(envTexture, vec4(0.012f, 0.015f, 0.3f, 0.45f));
+	Sprite cactusSprite = Sprite(envTexture, /*vec4(0.012f, 0.015f, 0.3f, 0.45f)*/vec4(0.0f, 0.0f, 1.0f, 1.0f));
 	SpriteHandle cactusID = content.RegisterSprite(Sprite(envTexture, vec4(0.012f, 0.015f, 0.3f, 0.45f)));
 	content.GetSprite(cactusID).SetColor(glm::vec4(0.15f, 0.8f, 0.15f, 1.0f));
 
@@ -22,7 +22,7 @@ void Game::Setup()
 	quad.Init();
 
 	cam.SetPosition(vec2(0.0f, 0.0f));
-	cam.SetOrthographicSize(5.0f);
+	cam.SetOrthographicSize(10.0f);
 	cam.SetPlanes(vec2(0.1f, 100.0f));
 	cam.OnScreenResize(GetWindowWidth(), GetWindowHeight());
 
@@ -31,9 +31,9 @@ void Game::Setup()
 	objects.push_back(GameObject());
 	objects[0].SetSprite(cactusID);
 	objects[0].SetPosition(glm::vec3());
-	objects.push_back(GameObject());
-	objects[1].SetSprite(cactusID);
-	objects[1].SetPosition(glm::vec3());
+	//objects.push_back(GameObject());
+	//objects[1].SetSprite(cactusID);
+	//objects[1].SetPosition(glm::vec3());
 }
 
 void Game::Update()
@@ -53,23 +53,21 @@ void Game::Draw()
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
+	BindSprite(objects[0].GetSprite());
+	mat.SetProperty("subrect", content.GetSprite(objects[0].GetSprite()).GetRect());
+	mat.SetProperty("colorOverride", content.GetSprite(objects[0].GetSprite()).GetColor());
 
-	for (size_t i = 0; i < objects.size(); i++)
+	
+	for (size_t y = 0; y < 10; y++)
 	{
-		SpriteHandle sprite = objects[i].GetSprite();
-		if (sprite >= 0)
+		for (size_t x = 0; x < 10; x++)
 		{
-			BindSprite(sprite);
-
-			mat.SetProperty("subrect", content.GetSprite(sprite).GetRect());
-			mat.SetProperty("colorOverride", content.GetSprite(sprite).GetColor());
-			wvp = cam.GetProjection() * cam.GetView() * glm::translate(mat4(1.0f), objects[i].GetPosition());
+			wvp = cam.GetProjection() * cam.GetView() * glm::translate(mat4(1.0f), vec3(x - 5.0f + sin(time.GetTime()), y - 5.0f, 0.0f));
 			mat.SetProperty("worldViewProj", wvp);
-
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 		}
 	}
-#endif
+
 	string title = "FPS " + std::to_string(1.0f / time.GetDelta());
 	SetWindowTitle(title.c_str());
 }

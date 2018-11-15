@@ -118,6 +118,12 @@
     <None Include="environment-desert.ss">
       <Filter>Resource Files\spritesheets</Filter>
     </None>
+    <None Include="res\shaders\spriteBatched.frag">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="res\shaders\spriteBatched.vert">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\cat-bits.png">

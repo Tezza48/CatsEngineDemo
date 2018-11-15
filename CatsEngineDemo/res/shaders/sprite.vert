@@ -18,7 +18,7 @@ void main()
 	mat2 rectScale = mat2(1.0);
 	rectScale[0][0] = ratio;
 
-	gl_Position = mat4(rectScale) * worldViewProj * vec4(vertPosition, 1.0);
+	gl_Position = worldViewProj * mat4(rectScale) * vec4(vertPosition, 1.0);
 	color = colorOverride;
 
 	tex = vertTex * subrect.zw + subrect.xy;

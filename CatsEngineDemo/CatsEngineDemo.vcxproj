@@ -185,6 +185,8 @@
     <None Include="res\shaders\default.vert" />
     <None Include="res\shaders\sprite.frag" />
     <None Include="res\shaders\sprite.vert" />
+    <None Include="res\shaders\spriteBatched.frag" />
+    <None Include="res\shaders\spriteBatched.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\cat-bits.png" />

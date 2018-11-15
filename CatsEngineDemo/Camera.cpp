@@ -18,7 +18,7 @@ mat4 Camera::GetViewProjection()
 
 void Camera::CalculateView()
 {
-	view = lookAt(vec3(position, -5.0f), vec3(position, 0.0f), vec3(0.0f, 1.0f, 0.0f));
+	view = lookAt(vec3(position, 5.0f), vec3(position, 0.0f), vec3(0.0f, 1.0f, 0.0f));
 }
 
 void Camera::CalculateProjection()
