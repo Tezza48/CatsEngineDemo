@@ -19,6 +19,9 @@
     <Filter Include="Resource Files\shaders">
       <UniqueIdentifier>{393e6320-f06c-4688-98b0-068362cfb594}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\spritesheets">
+      <UniqueIdentifier>{b5681323-48db-4b16-a07f-bf72d4373bae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -111,6 +114,9 @@
     </None>
     <None Include="res\shaders\sprite.vert">
       <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="environment-desert.ss">
+      <Filter>Resource Files\spritesheets</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

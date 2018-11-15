@@ -180,6 +180,7 @@
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="environment-desert.ss" />
     <None Include="res\shaders\default.frag" />
     <None Include="res\shaders\default.vert" />
     <None Include="res\shaders\sprite.frag" />

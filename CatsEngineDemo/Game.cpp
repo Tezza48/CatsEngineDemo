@@ -69,4 +69,7 @@ void Game::Draw()
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 		}
 	}
+#endif
+	string title = "FPS " + std::to_string(1.0f / time.GetDelta());
+	SetWindowTitle(title.c_str());
 }

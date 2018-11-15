@@ -51,7 +51,7 @@ protected:
 	virtual void Update();
 	virtual void Draw();
 
-	inline void SetWindowTitle(const char * newTitle) { windowTitle = newTitle; }
+	inline void SetWindowTitle(const char * newTitle) { windowTitle = newTitle; glfwSetWindowTitle(window, windowTitle.c_str()); }
 	inline void SetWindowSize(int width, int height) { windowWidth = width; windowHeight = height; }
 
 	inline int GetWindowWidth() { return windowWidth; }
