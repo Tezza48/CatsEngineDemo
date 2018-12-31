@@ -19,7 +19,6 @@ private:
 public:
 	Sprite();
 	Sprite(TextureHandle texture, vec4 _rect);
-	Sprite(TextureHandle texture, vec4 _rect);
 	~Sprite();
 
 	//void Init(TextureHandle texture, vec4 _rect);
