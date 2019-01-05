@@ -6,12 +6,18 @@
 #include <vector>
 #include <GL/glew.h>    // Initialize with glewInit()
 #include <GLFW/glfw3.h>
-
+#include <nfd/nfd.h>
 #include "SpriteSheet.h"
-#include <fstream>
+//#include <fstream>
+//#if _WIN32 | _WIN64
+//#define GLFW_EXPOSE_NATIVE_WIN32
+//#include <Windows.h>
+//#endif
+//#include <GLFW/glfw3native.h>
 
 void OnGui();
 
+void LoadSpriteFile();
 bool OpenTexture(const char * filename);
 void OpenSprites(const char * filename);
 void SaveSprites(const char * filename);
@@ -61,13 +67,7 @@ int main(int argc, char ** argv)
 
 	stbi_set_flip_vertically_on_load(false);
 
-	glGenTextures(1, &tex);
-	glBindTexture(GL_TEXTURE_2D, tex);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-	OpenTexture("environment-desert.png");
+	LoadSpriteFile();
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -83,28 +83,7 @@ int main(int argc, char ** argv)
 
 		glClear(GL_COLOR_BUFFER_BIT);
 		glClearColor(3.0f, 3.0f, 3.0f, 1.0f);
-
-		glMatrixMode(GL_PROJECTION_MATRIX);
-
-		float aspect = static_cast<float>(windowWidth) / windowHeight;
-
-		//glBegin(GL_QUADS);
-		//glColor3f(1, 1, 1);
-		//glVertex2f(-aspect, -1);
-		//glVertex2f(aspect, -1);
-		//glVertex2f(aspect, 1);
-		//glVertex2f(-aspect, 1);
-		//glEnd();
-
-		//glBegin(GL_TRIANGLES);
-		//glColor3f(1, 0, 0);
-		//glVertex2f(-0.5f, -0.5f);
-		//glColor3f(0, 1, 0);
-		//glVertex2f(0.0f, 0.5f);
-		//glColor3f(0, 0, 1);
-		//glVertex2f(0.5f, -0.5f);
-		//glEnd();
-
+		
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		glfwSwapBuffers(window);
 	}
@@ -124,6 +103,10 @@ void OnGui()
 		ImGui::BeginMainMenuBar();
 		if (ImGui::BeginMenu("File"))
 		{
+			if (ImGui::MenuItem("Open"))
+			{
+				LoadSpriteFile();
+			}
 			if (ImGui::MenuItem("Quit")) glfwSetWindowShouldClose(window, true);
 			ImGui::EndMenu();
 		}
@@ -158,6 +141,8 @@ void OnGui()
 		ImGui::EndMainMenuBar();
 	}
 
+	if (tex == 0) return;
+
 	if(currentSpriteIndex >= 0)
 	{// Editor View (Background)
 		ImGui::SetNextWindowPos(ImVec2(0, mainMenubarHeight));
@@ -179,7 +164,17 @@ void OnGui()
 		// Settings on the Right or Below
 		{
 			ImGui::SameLine();
-			ImGui::BeginChild("Rect Tools", ImVec2(0, 0), true, ImGuiWindowFlags_AlwaysVerticalScrollbar);
+			ImGui::BeginChild("Sprite Tools", ImVec2(0, 0), true, ImGuiWindowFlags_AlwaysVerticalScrollbar);
+			
+			Sprite & currSprite = sprites[currentSpriteIndex];
+
+			char * cstrName = new char[currSprite.name.length() - 1];
+			strcpy_s(cstrName, sizeof(cstrName), currSprite.name.c_str());
+			if (ImGui::InputText("Name", cstrName, currSprite.name.length()))
+			{
+				currSprite.name = std::string(cstrName);
+			}
+
 			ImGui::Text("Sprite Rect: x, y, width, height.");
 			{
 				ImGui::PushItemWidth(-1);
@@ -236,13 +231,44 @@ void OnGui()
 
 }
 
+void LoadSpriteFile()
+{
+	nfdchar_t *outpath = nullptr;
+	nfdresult_t result = NFD_OpenDialog(nullptr, nullptr, &outpath);
+
+	switch (result)
+	{
+	case NFD_OKAY:
+		OpenTexture(outpath);
+		return;
+	case NFD_CANCEL:
+		return;
+	default:
+		fprintf(stderr, "Error: %s\n", NFD_GetError());
+		return;
+	}
+}
+
 bool OpenTexture(const char * filename)
 {
+	if (tex == 0)
+	{
+		glGenTextures(1, &tex);
+		glBindTexture(GL_TEXTURE_2D, tex);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	}
+	else
+		glBindTexture(GL_TEXTURE_2D, tex);
+
 	int x, y, n;
 	unsigned char * data = stbi_load(filename, &x, &y, &n, 4);
-	if (!data) return false;
-	fprintf(stderr, stbi_failure_reason());
-	glBindTexture(GL_TEXTURE_2D, tex);
+	if (!data)
+	{
+		fprintf(stderr, stbi_failure_reason());
+		return false;
+	}
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	stbi_image_free(data);
@@ -261,7 +287,6 @@ void SaveSprites(const char * filename)
 
 bool SerializeSprites(void * data, int idx, const char ** outData)
 {
-	std::string *name = new std::string("Sprite " + std::to_string(idx));
-	*outData = name->c_str();
+	*outData = reinterpret_cast<Sprite *>(data)->name.c_str();
 	return true;
 }

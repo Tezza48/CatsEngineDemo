@@ -1,17 +1,25 @@
 #pragma once
 #include <string>
 #include <array>
+#include <vector>
 
 struct Sprite
 {
+	std::string name;
 	std::array<float, 4> rect;
 	std::array<float, 4> color;
 
 	Sprite()
 	{
+		name = "Sprite";
 		rect = std::array<float, 4>({ 0.25, 0.25, 0.5, 0.5 });
 		color = std::array<float, 4>({ 1, 1, 1, 1 });
 	}
+};
+
+struct SpriteSheet
+{
+	std::vector<Sprite> sprites;
 };
 
 //struct SpriteSheet
